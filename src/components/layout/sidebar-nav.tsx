@@ -5,16 +5,13 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
   Users,
   BarChart3,
-  ScanSearch,
   FileCode,
-  Settings,
-  LifeBuoy,
+  Home,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -23,7 +20,6 @@ const navItems = [
   { href: "/", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/vendors", icon: Users, label: "Vendors" },
   { href: "/reports", icon: BarChart3, label: "Reports" },
-  { href: "/analyzer", icon: ScanSearch, label: "Analyzer" },
 ];
 
 export function SidebarNav() {
@@ -40,45 +36,34 @@ export function SidebarNav() {
 
       <div className="flex-1 overflow-y-auto">
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname === "https://trent-maindash.vercel.app/"}
+              tooltip="Home"
+            >
+              <Link href="https://trent-maindash.vercel.app/">
+                <Home />
+                <span>Home</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} legacyBehavior passHref>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === item.href}
-                  tooltip={item.label}
-                >
-                  <a>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </a>
-                </SidebarMenuButton>
-              </Link>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.href}
+                tooltip={item.label}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
       </div>
-      
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Help">
-              <Link href="#">
-                <LifeBuoy />
-                <span>Help</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Settings">
-              <Link href="#">
-                <Settings />
-                <span>Settings</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </>
   );
 }
